@@ -1,23 +1,14 @@
 language: python
 
-#New container architecture
-#http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-#sudo: false
-
 python:
   - "3.4"
 
-cache:
-  apt: true
-  directories:
-  - build
+os:
+  - osx
 
 before_install:
-  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  - sudo apt-get update -qq
-  - sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
-  - sudo apt-get install qt5-default qttools5-dev-tools
-  - sh scripts/prepare_travis.sh
+  - brew update
+  - brew install pyqt5 --with-python3
 
 notifications:
   email:
@@ -32,5 +23,4 @@ install:
   - "pip install -r dev-requirements.txt"
 
 script:
-    - "xvfb-run py.test -vv" # Run tests in a fake X server
-    # - "pep8 --exclude=build,.git,ui"
+    - "py.test -vv"
